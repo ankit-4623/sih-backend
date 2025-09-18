@@ -2,7 +2,6 @@ import express from "express";
 import multer from "multer";
 import { checkAuthenticity } from "../utils/ai.js";
 
-
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -29,30 +28,19 @@ router.post("/verify-photo", upload.single("image"), async (req, res) => {
     }
 
     let imgUrl = null;
-    let authenticity = "unknown";
-    console.log(title,
-      description,
-      category,
-      priority,
-      latitude,
-      longitude,
-      city,
-      district,
-      region,
-      postalCode,
-      country,imgUrl)
+    let authenticity = "";
 
     if (req.file) {
-    
-      authenticity = await checkAuthenticity(title || "", req.file.buffer, req.file.mimetype);
+      authenticity = await checkAuthenticity(
+        title || "",
+        req.file.buffer,
+        req.file.mimetype
+      );
     }
-
-   
 
     res.json({
       message: "successfully",
       authenticity,
-      
     });
   } catch (err) {
     console.error("Error creating issue:", err);
