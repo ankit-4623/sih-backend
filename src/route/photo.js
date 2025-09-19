@@ -8,23 +8,13 @@ const upload = multer({ storage: multer.memoryStorage() });
 router.post("/verify-photo", upload.single("image"), async (req, res) => {
   try {
     const {
-      title,
-      description,
-      category,
-      priority,
-      latitude,
-      longitude,
-      city,
-      district,
-      region,
-      postalCode,
-      country,
+      title,    
     } = req.body;
 
-    if (!description || !latitude || !longitude) {
+    if (!title) {
       return res
         .status(400)
-        .json({ error: "description, latitude and longitude are required" });
+        .json({ error: "title is required" });
     }
 
     let imgUrl = null;
